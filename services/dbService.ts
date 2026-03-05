@@ -5,12 +5,8 @@ import { ParadeRecord, User, Notification, CadetStatus } from '../types';
 /**
  * The Supabase client requires a valid URL and Anon Key.
  */
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Supabase URL or Anon Key is missing. Check your .env file.');
-}
+const supabaseUrl = 'https://ixqqbmwqminmwrvrevlq.supabase.co';
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4cXFibXdxbWlubXdydnJldmxxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY1NDEzMDEsImV4cCI6MjA4MjExNzMwMX0.6hCsrU1MYuR2f4prp7X9sJW4L1-KoE1bW_Ri3-Ns5_s';
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
