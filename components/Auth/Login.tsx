@@ -49,7 +49,7 @@ export const Login: React.FC = () => {
     return (
         <div className="min-h-screen flex items-center justify-center p-6 bg-slate-900 relative overflow-hidden">
             <img
-                src="./download (1).jpg"
+                src="/download (1).jpg"
                 alt="Background"
                 className="absolute inset-0 w-full h-full object-cover opacity-30 blur-sm scale-105 grayscale-0"
             />
@@ -58,7 +58,7 @@ export const Login: React.FC = () => {
                 <div className="bg-primary p-8 text-center bg-blue-900 text-white">
                     <div className="w-24 h-24 bg-white rounded-full mx-auto mb-4 flex items-center justify-center text-blue-900 shadow-xl overflow-hidden border-4 border-white/20">
                         <img
-                            src="./download.jpg"
+                            src="/download.jpg"
                             alt="NPA Logo"
                             className="w-full h-full object-cover"
                         />

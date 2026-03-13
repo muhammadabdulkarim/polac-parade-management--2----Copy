@@ -4,7 +4,8 @@ import { dbService } from '../../services/dbService';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { toast } from 'react-hot-toast';
-import logo from '../../download.jpg';
+
+const logo = '/download.jpg';
 
 interface CadetRecordModalProps {
     cadet: any;
@@ -161,34 +162,34 @@ export const CadetRecordModal: React.FC<CadetRecordModalProps> = ({ cadet, activ
     const standing = getStatusInfo();
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md animate-in fade-in duration-300">
-            <div className="bg-white w-full max-w-2xl rounded-[2.5rem] shadow-2xl overflow-hidden border border-slate-200 animate-in zoom-in-95 duration-300 flex flex-col max-h-[90vh]">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4 bg-slate-900/80 backdrop-blur-md animate-in fade-in duration-300">
+            <div className="bg-white w-full max-w-2xl rounded-[1.5rem] sm:rounded-[2.5rem] shadow-2xl overflow-hidden border border-slate-200 animate-in zoom-in-95 duration-300 flex flex-col max-h-[95vh] sm:max-h-[90vh]">
                 {/* Premium Header */}
-                <div className="bg-[#0f172a] text-white p-8 relative overflow-hidden shrink-0">
-                    <div className="relative z-10 flex items-start justify-between">
-                        <div className="flex gap-6">
+                <div className="bg-[#0f172a] text-white p-6 md:p-8 relative overflow-hidden shrink-0">
+                    <div className="relative z-10 flex flex-col sm:flex-row items-start justify-between gap-4">
+                        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-center sm:items-start text-center sm:text-left w-full sm:w-auto">
                             <div className="relative">
-                                <div className="w-24 h-24 rounded-2xl bg-slate-800 border-2 border-slate-700 flex items-center justify-center overflow-hidden shadow-2xl">
-                                    <UserIcon size={48} className="text-slate-600" />
+                                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-slate-800 border-2 border-slate-700 flex items-center justify-center overflow-hidden shadow-2xl">
+                                    <UserIcon size={40} className="text-slate-600 sm:w-12 sm:h-12" />
                                 </div>
-                                <div className="absolute -bottom-2 -right-2 w-10 h-10 rounded-xl bg-blue-600 border-4 border-[#0f172a] flex items-center justify-center shadow-lg">
-                                    <img src={logo} alt="Academy Logo" className="w-6 h-6 object-contain" />
+                                <div className="absolute -bottom-2 -right-2 w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-blue-600 border-2 sm:border-4 border-[#0f172a] flex items-center justify-center shadow-lg">
+                                    <img src={logo} alt="Academy Logo" className="w-5 h-5 sm:w-6 sm:h-6 object-contain" />
                                 </div>
                             </div>
                             <div className="space-y-1">
-                                <h2 className="text-2xl font-black tracking-tight">{cadet.name}</h2>
-                                <div className="flex items-center gap-3">
-                                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">Regular Course {cadet.course_number}</span>
-                                    <span className="w-1 h-1 bg-slate-700 rounded-full"></span>
-                                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Squad {cadet.squad}</span>
+                                <h2 className="text-xl sm:text-2xl font-black tracking-tight">{cadet.name}</h2>
+                                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 sm:gap-3">
+                                    <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">Regular Course {cadet.course_number}</span>
+                                    <span className="hidden sm:inline-block w-1 h-1 bg-slate-700 rounded-full"></span>
+                                    <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Squad {cadet.squad}</span>
                                 </div>
-                                <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full border text-[10px] font-black mt-2 ${standing.color}`}>
+                                <div className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:py-1 rounded-full border text-[9px] sm:text-[10px] font-black mt-2 sm:mt-2 ${standing.color}`}>
                                     {standing.icon}
                                     {standing.label}
                                 </div>
                             </div>
                         </div>
-                        <button onClick={onClose} className="p-2 hover:bg-white/10 rounded-full transition-colors text-slate-400 hover:text-white">
+                        <button onClick={onClose} className="absolute top-0 right-0 sm:relative p-2 hover:bg-white/10 rounded-full transition-colors text-slate-400 hover:text-white">
                             <X size={24} />
                         </button>
                     </div>
@@ -198,16 +199,16 @@ export const CadetRecordModal: React.FC<CadetRecordModalProps> = ({ cadet, activ
                     <div className="absolute bottom-0 left-0 w-32 h-32 bg-slate-400/5 rounded-full translate-y-1/2 -translate-x-1/2 blur-2xl" />
                 </div>
 
-                <div className="flex-1 overflow-y-auto p-8 space-y-8">
+                <div className="flex-1 overflow-y-auto p-4 sm:p-8 space-y-6 sm:space-y-8">
                     {isLoading ? (
                         <div className="py-20 flex flex-col items-center gap-4 text-slate-400">
                             <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
                             <p className="text-xs font-black uppercase tracking-widest animate-pulse">Scanning Intelligence Database...</p>
                         </div>
                     ) : (
-                        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                        <div className="space-y-6 sm:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                             {/* Stats Cards */}
-                            <div className="grid grid-cols-3 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                                 <div className="p-5 rounded-3xl bg-slate-50 border border-slate-100 flex flex-col group hover:border-blue-200 hover:bg-blue-50/30 transition-all">
                                     <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                                         <CheckCircle size={16} />
@@ -232,14 +233,14 @@ export const CadetRecordModal: React.FC<CadetRecordModalProps> = ({ cadet, activ
                             </div>
 
                             {/* Accountability Focus */}
-                            <div className="p-6 rounded-[2rem] bg-[#f8fafc] border border-slate-200 relative overflow-hidden group">
+                            <div className="p-5 sm:p-6 rounded-2xl sm:rounded-[2rem] bg-[#f8fafc] border border-slate-200 relative overflow-hidden group">
                                 <div className="relative z-10">
-                                    <h4 className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">
+                                    <h4 className="flex items-center gap-2 text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">
                                         <Calendar size={14} className="text-blue-500" />
                                         Last Recorded Accountability
                                     </h4>
                                     {stats.lastEvent ? (
-                                        <div className="flex items-center justify-between">
+                                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-0">
                                             <div className="space-y-1">
                                                 <p className="text-sm font-bold text-slate-800 capitalize">Incident: {stats.lastEvent.status}</p>
                                                 <p className="text-xs text-slate-500">{new Date(stats.lastEvent.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })} • {stats.lastEvent.type}</p>
@@ -260,11 +261,11 @@ export const CadetRecordModal: React.FC<CadetRecordModalProps> = ({ cadet, activ
 
                             {/* Command Assessment */}
                             <div className="space-y-3">
-                                <h4 className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] px-2">
+                                <h4 className="flex items-center gap-2 text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] px-2">
                                     <TrendingUp size={14} className="text-blue-500" />
                                     Command Assessment
                                 </h4>
-                                <div className="p-6 rounded-[2rem] bg-white border-2 border-slate-100 shadow-sm relative italic">
+                                <div className="p-5 sm:p-6 rounded-2xl sm:rounded-[2rem] bg-white border-2 border-slate-100 shadow-sm relative italic">
                                     <p className="text-slate-600 leading-relaxed text-sm font-medium">
                                         "{getPerformanceComment()}"
                                     </p>
@@ -276,14 +277,14 @@ export const CadetRecordModal: React.FC<CadetRecordModalProps> = ({ cadet, activ
                 </div>
 
                 {/* Secure Actions */}
-                <div className="p-8 bg-slate-50 border-t border-slate-200 flex items-center gap-4 shrink-0">
+                <div className="p-4 sm:p-8 bg-slate-50 border-t border-slate-200 flex items-center gap-4 shrink-0">
                     <button
                         onClick={exportToPDF}
                         disabled={isLoading}
-                        className="flex-1 bg-[#0f172a] hover:bg-slate-800 text-white font-black py-5 rounded-2xl transition-all shadow-xl flex items-center justify-center gap-3 group active:scale-[0.98] disabled:opacity-50"
+                        className="flex-1 bg-[#0f172a] hover:bg-slate-800 text-white font-black py-4 sm:py-5 rounded-2xl transition-all shadow-xl flex items-center justify-center gap-2 sm:gap-3 group active:scale-[0.98] disabled:opacity-50"
                     >
-                        <FileText size={20} className="group-hover:translate-y-[-2px] transition-transform" />
-                        <span className="text-sm uppercase tracking-widest">Generate Official Dossier</span>
+                        <FileText size={18} className="sm:w-5 sm:h-5 group-hover:translate-y-[-2px] transition-transform" />
+                        <span className="text-xs sm:text-sm uppercase tracking-widest leading-tight text-center">Generate<span className="hidden sm:inline"> Official</span> Dossier</span>
                     </button>
 
                 </div>

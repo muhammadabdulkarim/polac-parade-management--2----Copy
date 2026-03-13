@@ -17,14 +17,17 @@ interface HistoricalTrendsProps {
 }
 
 export const HistoricalTrends: React.FC<HistoricalTrendsProps> = ({ showChart = true }) => {
-    const { records } = useParade();
+    const { records, selectedParadeType } = useParade();
 
     const trendData = useMemo(() => {
         // Group by date and calculate average attendance %
         const dailyStats: Record<string, { date: string, percentage: number, total: number, present: number }> = {};
 
+        // Filter by the currently selected dashboard Parade Type before processing
+        const filteredRecords = records.filter(r => r.paradeType === selectedParadeType);
+
         // Process last 14 unique dates
-        const sortedRecords = [...records].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+        const sortedRecords = [...filteredRecords].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
         sortedRecords.forEach(record => {
             if (!dailyStats[record.date]) {
@@ -40,7 +43,7 @@ export const HistoricalTrends: React.FC<HistoricalTrendsProps> = ({ showChart = 
             present: day.present,
             total: day.total
         })).slice(-14);
-    }, [records]);
+    }, [records, selectedParadeType]);
 
     return (
         <div className="space-y-6">

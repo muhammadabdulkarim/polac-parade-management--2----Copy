@@ -92,9 +92,7 @@ export const AttendanceAudit: React.FC = () => {
             'Status': item.status,
             'Course': item.r.courseNumber ? formatRC(item.r.courseNumber) : 'Legacy',
             'Year Level': item.r.courseNumber ? calculateCurrentLevel(item.r.courseNumber, activeRC) : item.r.yearGroup,
-            'Officer': item.r.officerName,
-            'Reason': (item as any).reason_category || 'Uncategorized',
-            'Notes': (item as any).commandant_notes || ''
+            'Officer': item.r.officerName
         }));
         const ws = XLSX.utils.json_to_sheet(data);
         const wb = XLSX.utils.book_new();
@@ -149,10 +147,10 @@ export const AttendanceAudit: React.FC = () => {
                     )}
                 </div>
 
-                <div className="flex flex-wrap items-center gap-3">
-                    <div className="flex items-center gap-2">
+                <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 w-full lg:w-auto">
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
                         <select
-                            className="px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full sm:w-auto px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold outline-none focus:ring-2 focus:ring-blue-500"
                             value={courseFilter}
                             onChange={(e) => setCourseFilter(e.target.value)}
                         >
@@ -163,7 +161,7 @@ export const AttendanceAudit: React.FC = () => {
                         </select>
 
                         <select
-                            className="px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full sm:w-auto px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold outline-none focus:ring-2 focus:ring-blue-500"
                             value={statusFilter}
                             onChange={(e) => setStatusFilter(e.target.value)}
                         >
@@ -175,26 +173,27 @@ export const AttendanceAudit: React.FC = () => {
 
                         <button
                             onClick={handleReset}
-                            className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
+                            className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all flex items-center justify-center sm:justify-start"
                             title="Reset Filters"
                         >
                             <RotateCcw size={18} />
+                            <span className="sm:hidden ml-2 text-xs font-bold uppercase">Reset</span>
                         </button>
                     </div>
 
-                    <div className="h-8 w-px bg-slate-200 mx-2 hidden sm:block" />
+                    <div className="h-8 w-px bg-slate-200 mx-2 hidden lg:block" />
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 w-full sm:w-auto">
                         <button
                             onClick={handleExport}
-                            className="flex items-center gap-2 px-4 py-2 bg-emerald-50 text-emerald-600 rounded-xl text-xs font-bold hover:bg-emerald-100 transition-all"
+                            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-3 sm:py-2 bg-emerald-50 text-emerald-600 rounded-xl text-xs font-bold hover:bg-emerald-100 transition-all"
                         >
                             <Download size={14} />
                             Excel
                         </button>
                         <button
                             onClick={() => reportService.generateCommandReturn(records, "ATTENDANCE AUDIT REPORT")}
-                            className="flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-xl text-xs font-bold hover:bg-blue-100 transition-all font-bold"
+                            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-3 sm:py-2 bg-blue-50 text-blue-600 rounded-xl text-xs font-bold hover:bg-blue-100 transition-all"
                         >
                             <FileText size={14} />
                             PDF
@@ -216,8 +215,6 @@ export const AttendanceAudit: React.FC = () => {
                                 <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Date / Type</th>
                                 <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Status</th>
                                 <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">P / S / Y</th>
-                                <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Reason Category</th>
-                                <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Commandant Notes</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100">
@@ -266,30 +263,6 @@ export const AttendanceAudit: React.FC = () => {
                                                 <span className="text-[10px] font-bold text-cyan-600" title="Yet to Report">{item.r.yetToReportCount || 0}</span>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-4">
-                                            <select
-                                                className="bg-transparent border-0 text-[10px] font-bold text-slate-600 outline-none focus:ring-0 cursor-pointer hover:text-blue-600"
-                                                defaultValue={(item as any).reason_category || 'UNCATEGORIZED'}
-                                                onChange={(e) => handleUpdateDetail((item as any).id, { reason_category: e.target.value })}
-                                            >
-                                                <option value="UNCATEGORIZED">UNCATEGORIZED</option>
-                                                <option value="MEDICAL (SICK BAY)">MEDICAL (SICK BAY)</option>
-                                                <option value="EMERGENCY LEAVE">EMERGENCY LEAVE</option>
-                                                <option value="UNAUTHORIZED ABSENCE">UNAUTHORIZED ABSENCE</option>
-                                                <option value="OFFICIAL DUTY">OFFICIAL DUTY</option>
-                                                <option value="ON PASS">ON PASS</option>
-                                                <option value="ON SUSPENSION">ON SUSPENSION</option>
-                                                <option value="YET TO REPORT">YET TO REPORT</option>
-                                            </select>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <input
-                                                placeholder="Add command follow-up..."
-                                                className="bg-transparent border-0 text-[11px] text-slate-500 placeholder-slate-300 outline-none w-full focus:ring-0 focus:placeholder-slate-400/0"
-                                                defaultValue={(item as any).commandant_notes || ''}
-                                                onBlur={(e) => handleUpdateDetail((item as any).id, { commandant_notes: e.target.value })}
-                                            />
-                                        </td>
                                     </tr>
                                 );
                             })}
@@ -333,35 +306,6 @@ export const AttendanceAudit: React.FC = () => {
                                                 </span>
                                             </div>
                                         )}
-                                    </div>
-
-                                    <div className="space-y-3">
-                                        <div>
-                                            <label className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1 block">Reason Category</label>
-                                            <select
-                                                className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-[11px] font-bold text-slate-700 focus:ring-2 focus:ring-blue-500 outline-none"
-                                                defaultValue={(item as any).reason_category || 'UNCATEGORIZED'}
-                                                onChange={(e) => handleUpdateDetail((item as any).id, { reason_category: e.target.value })}
-                                            >
-                                                <option value="UNCATEGORIZED">UNCATEGORIZED</option>
-                                                <option value="MEDICAL (SICK BAY)">MEDICAL (SICK BAY)</option>
-                                                <option value="EMERGENCY LEAVE">EMERGENCY LEAVE</option>
-                                                <option value="UNAUTHORIZED ABSENCE">UNAUTHORIZED ABSENCE</option>
-                                                <option value="OFFICIAL DUTY">OFFICIAL DUTY</option>
-                                                <option value="ON PASS">ON PASS</option>
-                                                <option value="ON SUSPENSION">ON SUSPENSION</option>
-                                                <option value="YET TO REPORT">YET TO REPORT</option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <label className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1 block">Commandant Notes</label>
-                                            <input
-                                                placeholder="Add follow-up..."
-                                                className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-[11px] text-slate-600 placeholder-slate-300 focus:ring-2 focus:ring-blue-500 outline-none"
-                                                defaultValue={(item as any).commandant_notes || ''}
-                                                onBlur={(e) => handleUpdateDetail((item as any).id, { commandant_notes: e.target.value })}
-                                            />
-                                        </div>
                                     </div>
                                 </div>
                             );

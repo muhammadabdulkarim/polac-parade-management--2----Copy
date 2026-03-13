@@ -24,21 +24,21 @@ export const Header: React.FC<HeaderProps> = ({ title, showRefresh = true, onPro
     };
 
     return (
-        <header className="bg-white border-b border-slate-200 h-20 flex items-center justify-between px-4 md:px-8 shrink-0 relative">
-            <div className="flex items-center gap-3">
+        <header className="bg-white border-b border-slate-200 h-20 flex items-center justify-between px-2 md:px-8 shrink-0 relative">
+            <div className="flex items-center gap-1 md:gap-3 min-w-0">
                 {onMenuClick && (
                     <button
                         onClick={onMenuClick}
-                        className="p-2 md:hidden text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
+                        className="p-1 md:p-2 md:hidden text-slate-600 hover:bg-slate-100 rounded-lg transition-colors shrink-0"
                     >
                         <Menu size={24} />
                     </button>
                 )}
-                <h2 className="text-lg md:text-xl font-bold text-slate-800 capitalize truncate max-w-[150px] md:max-w-none">{title}</h2>
-                <span className="hidden sm:inline-block px-2 py-0.5 bg-blue-100 text-blue-600 text-[10px] font-black rounded-full border border-blue-200">V2</span>
+                <h2 className="text-base md:text-xl font-bold text-slate-800 capitalize truncate max-w-[120px] md:max-w-none">{title}</h2>
+                <span className="hidden sm:inline-block px-2 py-0.5 bg-blue-100 text-blue-600 text-[10px] font-black rounded-full border border-blue-200 shrink-0">V2</span>
             </div>
 
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center gap-1 md:gap-4 shrink-0">
                 {/* Notification Bell */}
                 <div className="relative">
                     <button
@@ -129,18 +129,18 @@ export const Header: React.FC<HeaderProps> = ({ title, showRefresh = true, onPro
                     </button>
                 )}
 
-                <div className="h-8 w-[1px] bg-slate-200 mx-2"></div>
+                <div className="h-8 w-[1px] bg-slate-200 mx-1 md:mx-2"></div>
 
                 <div
                     onClick={onProfileClick}
-                    className={`flex items-center space-x-3 ${onProfileClick ? 'cursor-pointer group hover:bg-slate-50 p-2 rounded-xl border border-transparent hover:border-slate-100 transition-all' : ''}`}
+                    className={`flex items-center gap-1 md:gap-3 ${onProfileClick ? 'cursor-pointer group hover:bg-slate-50 p-1 md:p-2 rounded-xl border border-transparent hover:border-slate-100 transition-all' : ''}`}
                     title={onProfileClick ? 'Open System Settings' : ''}
                 >
                     <div className="text-right hidden md:block">
                         <p className="text-sm font-bold text-slate-800 group-hover:text-blue-600 transition-colors">{currentUser?.fullName}</p>
                         <p className="text-xs text-slate-500">{currentUser?.role === 'commandant' ? 'Administrator' : 'Course Officer'}</p>
                     </div>
-                    <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold border-2 border-white shadow-sm group-hover:shadow-md transition-all">
+                    <div className="w-8 h-8 md:w-10 md:h-10 shrink-0 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold border-2 border-white shadow-sm group-hover:shadow-md transition-all text-xs md:text-base">
                         {currentUser?.fullName.charAt(0)}
                     </div>
                 </div>

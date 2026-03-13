@@ -1,7 +1,9 @@
-import React from 'react';
-import { History, FileText } from 'lucide-react';
+import React, { useState } from 'react';
+import { History, FileText, Eye } from 'lucide-react';
 import { useAuth } from '../../../context/AuthContext';
 import { useParade } from '../../../context/ParadeContext';
+import { SubmissionPreviewModal } from './SubmissionPreviewModal';
+import { ParadeRecord } from '../../../types';
 
 export const SubmissionHistory: React.FC = () => {
     const { currentUser } = useAuth();
@@ -13,6 +15,8 @@ export const SubmissionHistory: React.FC = () => {
         currentPage,
         totalPages
     } = useParade();
+    const [selectedRecord, setSelectedRecord] = useState<ParadeRecord | null>(null);
+
     const officerRecords = records.filter(r => r.officerId === currentUser?.id);
 
     return (
@@ -33,7 +37,8 @@ export const SubmissionHistory: React.FC = () => {
                     </div>
                 </div>
                 <div className="overflow-x-auto">
-                    <table className="w-full text-left">
+                    {/* Desktop Table View */}
+                    <table className="w-full text-left hidden md:table">
                         <thead className="bg-slate-50 border-b">
                             <tr>
                                 <th className="px-8 py-4 text-xs font-bold text-slate-500 uppercase">Date</th>
@@ -44,7 +49,8 @@ export const SubmissionHistory: React.FC = () => {
                                 <th className="px-8 py-4 text-xs font-bold text-slate-500 uppercase">Pass</th>
                                 <th className="px-8 py-4 text-xs font-bold text-slate-500 uppercase">Susp.</th>
                                 <th className="px-8 py-4 text-xs font-bold text-slate-500 uppercase">YTR</th>
-                                <th className="px-8 py-4 text-xs font-bold text-slate-500 uppercase">Grand Total</th>
+                                <th className="px-8 py-4 text-xs font-bold text-slate-500 uppercase">Total</th>
+                                <th className="px-8 py-4 text-xs font-bold text-slate-500 uppercase text-center w-24">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100">
@@ -63,17 +69,76 @@ export const SubmissionHistory: React.FC = () => {
                                     <td className="px-8 py-5 text-slate-500 font-bold">{r.suspensionCount || 0}</td>
                                     <td className="px-8 py-5 text-cyan-600 font-bold">{r.yetToReportCount || 0}</td>
                                     <td className="px-8 py-5 font-bold">{r.grandTotal}</td>
+                                    <td className="px-8 py-5 text-center">
+                                        <button
+                                            onClick={() => setSelectedRecord(r)}
+                                            className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-colors"
+                                            title="View Details"
+                                        >
+                                            <Eye size={18} />
+                                        </button>
+                                    </td>
                                 </tr>
                             ))}
                             {officerRecords.length === 0 && !isDataLoading && (
                                 <tr>
-                                    <td colSpan={6} className="px-8 py-20 text-center italic text-slate-400">
+                                    <td colSpan={10} className="px-8 py-20 text-center italic text-slate-400">
                                         You haven't submitted any parade states yet.
                                     </td>
                                 </tr>
                             )}
                         </tbody>
                     </table>
+
+                    {/* Mobile Card View */}
+                    <div className="md:hidden divide-y divide-slate-100 border-t border-slate-100">
+                        {officerRecords.map((r) => (
+                            <div key={r.id} className="p-4 space-y-4 hover:bg-slate-50 transition-colors">
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-2 text-slate-800 font-bold text-sm">
+                                        <FileText size={16} className="text-blue-600" />
+                                        <span>{r.paradeType}</span>
+                                    </div>
+                                    <span className="text-xs font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded-lg">{new Date(r.date).toLocaleDateString()}</span>
+                                </div>
+                                <div className="grid grid-cols-2 gap-2 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                                    <div className="flex justify-between items-center bg-white p-2 rounded-lg shadow-sm border border-slate-100">
+                                        <span className="text-[10px] font-black uppercase text-slate-400">Present</span>
+                                        <span className="text-sm font-bold text-emerald-600">{r.presentCount}</span>
+                                    </div>
+                                    <div className="flex justify-between items-center bg-white p-2 rounded-lg shadow-sm border border-slate-100">
+                                        <span className="text-[10px] font-black uppercase text-slate-400">Absent</span>
+                                        <span className="text-sm font-bold text-rose-600">{r.absentCount}</span>
+                                    </div>
+                                    <div className="flex justify-between items-center bg-white p-2 rounded-lg shadow-sm border border-slate-100">
+                                        <span className="text-[10px] font-black uppercase text-slate-400">Detention</span>
+                                        <span className="text-sm font-bold text-indigo-600">{r.detentionCount}</span>
+                                    </div>
+                                    <div className="flex justify-between items-center bg-white p-2 rounded-lg shadow-sm border border-slate-100">
+                                        <span className="text-[10px] font-black uppercase text-slate-400">P/S/Y</span>
+                                        <span className="text-xs font-bold text-slate-600 tracking-wider">
+                                            {r.passCount || 0}/{r.suspensionCount || 0}/{r.yetToReportCount || 0}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="flex items-center justify-between pt-1">
+                                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Grand Total</span>
+                                    <span className="text-sm font-black text-slate-800">{r.grandTotal}</span>
+                                </div>
+                                <button
+                                    onClick={() => setSelectedRecord(r)}
+                                    className="w-full mt-2 py-3 bg-white border-2 border-slate-200 text-slate-600 rounded-xl font-bold text-sm hover:border-slate-300 hover:bg-slate-50 transition-colors flex items-center justify-center gap-2 shadow-sm"
+                                >
+                                    <Eye size={16} /> Look at Details
+                                </button>
+                            </div>
+                        ))}
+                        {officerRecords.length === 0 && !isDataLoading && (
+                            <div className="p-8 text-center italic text-slate-400 text-sm">
+                                You haven't submitted any parade states yet.
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
 
@@ -95,6 +160,11 @@ export const SubmissionHistory: React.FC = () => {
                     </button>
                 </div>
             )}
+
+            <SubmissionPreviewModal
+                record={selectedRecord}
+                onClose={() => setSelectedRecord(null)}
+            />
         </div>
     );
 };

@@ -27,7 +27,14 @@ const AppContent: React.FC = () => {
 
   return (
     <ParadeProvider>
-      <Toaster position="top-right" />
+      <Toaster
+        position="top-center"
+        containerStyle={{
+          top: 10,
+          position: 'fixed',
+          zIndex: 99999
+        }}
+      />
       <Routes>
         <Route path="/login" element={!currentUser ? <Login /> : <Navigate to="/" />} />
 

@@ -197,7 +197,7 @@ export const ParadeForm: React.FC = () => {
                         {/* Standard Absence Column */}
                         <div className="space-y-3">
                             <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-2">Excused / Unexcused</p>
-                            <div className="grid grid-cols-3 gap-2">
+                            <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
                                 {(['absent', 'sick', 'detention'] as const).map(key => (
                                     <div key={key} className="p-3 bg-slate-50 rounded-2xl border border-slate-100 focus-within:border-blue-200 transition-colors">
                                         <label className="text-[9px] font-bold text-slate-400 uppercase tracking-tighter mb-1 block truncate">{key === 'detention' ? 'Detent.' : key}</label>
@@ -215,7 +215,7 @@ export const ParadeForm: React.FC = () => {
                         {/* Secondary Status Column */}
                         <div className="space-y-3">
                             <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-2">Secondary States</p>
-                            <div className="grid grid-cols-3 gap-2">
+                            <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
                                 {([{ key: 'pass', label: 'Pass' }, { key: 'suspension', label: 'Susp.' }, { key: 'yetToReport', label: 'YTR' }] as const).map(item => (
                                     <div key={item.key} className="p-3 bg-slate-50 rounded-2xl border border-slate-100 focus-within:border-blue-200 transition-colors">
                                         <label className="text-[9px] font-bold text-slate-400 uppercase tracking-tighter mb-1 block truncate">{item.label}</label>

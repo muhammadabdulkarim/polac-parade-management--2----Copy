@@ -132,22 +132,22 @@ export const DashboardOverview: React.FC = () => {
                                             <span className="text-sm font-black text-slate-800">{item.total}</span>
                                         </div>
                                     </div>
-                                    <div className="grid grid-cols-4 gap-2 bg-slate-50 p-2 rounded-xl border border-slate-100">
-                                        <div className="text-center">
-                                            <p className="text-[8px] font-black text-slate-400 uppercase mb-0.5">PRS</p>
-                                            <p className="text-xs font-bold text-emerald-600">{item.present}</p>
+                                    <div className="grid grid-cols-2 gap-3 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                                        <div className="flex items-center justify-between bg-white p-2 rounded-lg border border-slate-100 shadow-sm">
+                                            <span className="text-[10px] font-black text-slate-400 uppercase">Present</span>
+                                            <span className="text-sm font-black text-emerald-600">{item.present}</span>
                                         </div>
-                                        <div className="text-center">
-                                            <p className="text-[8px] font-black text-slate-400 uppercase mb-0.5">ABS</p>
-                                            <p className="text-xs font-bold text-rose-600">{item.absent}</p>
+                                        <div className="flex items-center justify-between bg-white p-2 rounded-lg border border-slate-100 shadow-sm">
+                                            <span className="text-[10px] font-black text-slate-400 uppercase">Absent</span>
+                                            <span className="text-sm font-black text-rose-600">{item.absent}</span>
                                         </div>
-                                        <div className="text-center">
-                                            <p className="text-[8px] font-black text-slate-400 uppercase mb-0.5">SCK</p>
-                                            <p className="text-xs font-bold text-amber-600">{item.sick}</p>
+                                        <div className="flex items-center justify-between bg-white p-2 rounded-lg border border-slate-100 shadow-sm">
+                                            <span className="text-[10px] font-black text-slate-400 uppercase">Sick</span>
+                                            <span className="text-sm font-black text-amber-600">{item.sick}</span>
                                         </div>
-                                        <div className="text-center">
-                                            <p className="text-[8px] font-black text-slate-400 uppercase mb-0.5">DET</p>
-                                            <p className="text-xs font-bold text-indigo-600">{item.detention}</p>
+                                        <div className="flex items-center justify-between bg-white p-2 rounded-lg border border-slate-100 shadow-sm">
+                                            <span className="text-[10px] font-black text-slate-400 uppercase">Detention</span>
+                                            <span className="text-sm font-black text-indigo-600">{item.detention}</span>
                                         </div>
                                     </div>
                                 </div>
